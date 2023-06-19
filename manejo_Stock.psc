@@ -4,18 +4,18 @@ Proceso manejo_Stock
 	
 	dimension elementos_cant_id[10000,3]
 	
-	elementos_cant_id[1,0,0] = "zapatillas nike mujer"
-	elementos_cant_id[1,1,0] = "20"
-	elementos_cant_id[1,1,1] = "1"
+	elementos_cant_id[1,0] = "zapatillas nike mujer"
+	elementos_cant_id[1,1] = "20"
+	elementos_cant_id[1,2] = "1"
 	
 	
-	elementos_cant_id[2,0,0] = "buzo adidas"
-	elementos_cant_id[2,2,0] = "4"
-	elementos_cant_id[2,2,2] = "2"
+	elementos_cant_id[2,0] = "buzo adidas"
+	elementos_cant_id[2,1] = "4"
+	elementos_cant_id[2,2] = "2"
 	
-	elementos_cant_id[3,0,0] = "pantalon puma"
-	elementos_cant_id[3,3,0] = "33"
-	elementos_cant_id[3,3,3] = "3"
+	elementos_cant_id[3,0] = "pantalon puma"
+	elementos_cant_id[3,1] = "33"
+	elementos_cant_id[3,2] = "3"
 	
 	
 	
@@ -31,11 +31,19 @@ Proceso manejo_Stock
 		3:
 			//Con una lista de ordenamiento i, j ,k ordene de mayor a menor por cantidades
 		4:
-			//Mostrar toda la lista con un triple for !!!
+			lista = mostrarLista(elementos_cant_id)
+			Mostrar lista
 		De Otro Modo:
 			a=2
 	Fin Segun
 	finMientras
-	
-	
 FinProceso
+
+
+
+	Funcion  lista <- mostrarLista (elementos_cant_id)
+		Para i = 1 Hasta 8 Hacer
+			Mostrar "Nombre: ", elementos_cant_id[i,0], " - ", "Cantidad: ", elementos_cant_id[i,1], " ",  "Id: ", elementos_cant_id[i,2]
+		Fin Para
+FinFuncion
+
