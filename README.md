@@ -1,3 +1,2 @@
 # tp-programacion
-Trabajo practico materia programación
-asdasd
+Trabajo Practico Materia de Programación. 
