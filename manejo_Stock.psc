@@ -1,40 +1,39 @@
 Proceso manejo_Stock
 	
-	// variables para el manejo de menú
-	Definir opciones Como Entero   // opcion del menú principal
-	Definir opc Como Entero        // opcion del menú de carga de datos
+	// Variables para el manejo de menú
+	Definir opciones Como Entero   // Opcion del menú principal
+	Definir opc Como Entero        // Opcion del menú de carga de datos
 	
-	// variables de ciclos y cálculos
-	Definir a Como Entero          // controla el fin del programa
-	Definir i Como Entero          // fila de la matriz  
-	Definir encontre Como Logico   // indica si el dato buscado lo encontré o no
-	Definir ult Como Entero        // indica la última fila llena de la matriz 
-	Definir stock Como Entero      // stock actual del producto
-	Definir pos Como Entero        // posicion donde se encontró el id a buscar
+	// Variables de ciclos y cálculos
+	Definir a Como Entero          // Controla el fin del programa
+	Definir i Como Entero          // Fila de la matriz  
+	Definir encontre Como Logico   // Indica si el dato buscado lo encontré o no
+	Definir ult Como Entero        // Indica la última fila llena de la matriz 
+	Definir stock Como Entero      // Stock actual del producto
+	Definir pos Como Entero        // Posicion donde se encontró el id a buscar
 	
-	// variables ingresadas por el usuario
-	Definir idBuscar Como Caracter   // id producto a buscar 
-	Definir cantidad Como Entero     // cantidad en stock ingresada por el usuario
-	Definir id Como Caracter         // id de producto ingresado por el usuario
-	Definir elemento Como Caracter   // nombre del producto ingresado por el usuario
-	
-	
-	// variables para conversión de datos
-	Definir cantidadTXT Como Caracter   // convierte un número entero a caracter
-	
-	// matriz
-	Dimension elementos_cant_id[10000,3]  // dimensiono el tamaño de la matriz (cant filas y cant columnas)
-	Definir elementos_cant_id Como Caracter  // defino el contenido de la matriz (cada casiller contiene caracteres)
+	// Variables ingresadas por el usuario
+	Definir idBuscar Como Caracter   // ID producto a buscar 
+	Definir cantidad Como Entero     // Cantidad en stock ingresada por el usuario
+	Definir id Como Caracter         // ID de producto ingresado por el usuario
+	Definir elemento Como Caracter   // Nombre del producto ingresado por el usuario
 	
 	
-	// inicializo a la variable para que controle ciclo mientras
+	// Variables para conversión de datos
+	Definir cantidadTXT Como Caracter   // Convierte un número entero a caracter
+	
+	// Matriz
+	Dimension elementos_cant_id[10000,3]  // Dimensiono el tamaño de la matriz (cant filas y cant columnas)
+	Definir elementos_cant_id Como Caracter  // Defino el contenido de la matriz (cada casiller contiene caracteres)
+	
+	
+	// Inicializo a la variable para que controle ciclo mientras
 	a = 1
 	
-	// cargo la  matriz con datos
+	// Cargo la  matriz con datos
 	elementos_cant_id[0,0] = "Zapatillas Nike Mujer"
 	elementos_cant_id[0,1] = "20"
 	elementos_cant_id[0,2] = "1"
-	
 	
 	elementos_cant_id[1,0] = "Buzo Adidas"
 	elementos_cant_id[1,1] = "4"
@@ -44,7 +43,7 @@ Proceso manejo_Stock
 	elementos_cant_id[2,1] = "33"
 	elementos_cant_id[2,2] = "3"
 	
-	ult = 2  // ultima fila cargada
+	ult = 2  // Ultima fila cargada
 	
 	// Comienza el proceso
 	
@@ -61,7 +60,7 @@ Proceso manejo_Stock
 		Segun opciones Hacer
 			1:
 				//Si usuario ingresa el id existente se va a permitir agregar cantidad , 
-				// caso contrario, se ingresa un nuevo producto
+				// Caso contrario, se ingresa un nuevo producto
 			    Escribir "Menu de productos"
 			    Escribir "1- Nuevo producto"
 				Escribir "2- Modificar stock de producto existente" 
@@ -95,11 +94,11 @@ Proceso manejo_Stock
 					Mostrar "Ingrese la cantidad a agregar: "
 					Leer cantidad
 					
-					// búsqueda devuelve la posición donde encontró el dato, caso contrario
-					// devuelve -1 (un valor absurdo)
+					// Búsqueda devuelve la posición donde encontró el dato, caso contrario
+					// Devuelve -1 (un valor absurdo)
 					pos = buscar(elementos_cant_id,idBuscar,ult)
 					
-					si pos <> -1 entonces
+					Si pos <> -1 entonces
 						stock <- ConvertirANumero(elementos_cant_id[pos, 1])
 						stock <- stock + cantidad
 						cantidadTXT<- ConvertirATexto(stock)
@@ -117,13 +116,13 @@ Proceso manejo_Stock
 				Escribir "Ingrese el Id a buscar"
 				Leer idBuscar
 				
-				// búsqueda
+				// Búsqueda
 				pos = buscar(elementos_cant_id,idBuscar,ult)
 				
 				Si pos <> -1 entonces
-					escribir "Descripcion : ", elementos_cant_id[pos,0]
-					escribir "Stock       : ", elementos_cant_id[pos,1]
-					escribir "Codigo      : ", elementos_cant_id[pos,2]
+					Escribir "Descripcion : ", elementos_cant_id[pos,0]
+					Escribir "Stock       : ", elementos_cant_id[pos,1]
+					Escribir "Codigo      : ", elementos_cant_id[pos,2]
 				SiNo
 					Escribir "Error! No existe el id ingresado"
 				FinSi
@@ -147,17 +146,17 @@ FinProceso
 
 //----------------------------------------------------------------------------------------------//
 SubProceso mostrarLista (elementos_cant_id, ult)
-	definir i como entero
+	Definir i como entero
 	
-	Escribir "" // renglón en blanco
+	Escribir "" // Renglón en blanco
 	Escribir "Lista de productos"
 	Para i<-0 Hasta ult Con Paso 1 Hacer
-		escribir "Descripcion : ", elementos_cant_id[i,0]
-		escribir "Stock       : ", elementos_cant_id[i,1]
-		escribir "ID Codigo   : ", elementos_cant_id[i,2]
+		Escribir "Descripcion : ", elementos_cant_id[i,0]
+		Escribir "Stock       : ", elementos_cant_id[i,1]
+		Escribir "ID Codigo   : ", elementos_cant_id[i,2]
 	Fin Para
 	Escribir ""	
-finSubProceso
+FinSubProceso
 
 //----------------------------------------------------------------------------------------------//
 SubProceso ordenamiento(elementos_cant_id, ult)
@@ -178,7 +177,6 @@ SubProceso ordenamiento(elementos_cant_id, ult)
 				elementos_cant_id[i,1] <- elementos_cant_id[j,1]
 				elementos_cant_id[j,1] <- aux1
 				
-				
 				aux2 <- elementos_cant_id[i,2]
 				elementos_cant_id[i,2] <- elementos_cant_id[j,2]
 				elementos_cant_id[j,2] <- aux2
@@ -186,6 +184,7 @@ SubProceso ordenamiento(elementos_cant_id, ult)
 				aux3 <- elementos_cant_id[i,0]
 				elementos_cant_id[i,0] <- elementos_cant_id[j,0]
 				elementos_cant_id[j,0] <- aux3
+				
 			Fin Si
 		Fin Para
 	Fin Para
