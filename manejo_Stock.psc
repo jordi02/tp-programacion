@@ -1,35 +1,43 @@
-Proceso fgdfg
-	//VER DE PONER SI QUEREMOS ELIMINAR UN PRODUCTO O HACER ESO MISMO CON EL REEMPLAZO DE UNO NUEVO, OPCION Q NOS PUEDEN LLEGAR A PREGUNTAR O PEDIR LAS PROFES
+Proceso trabajo_practico
 	
 	Definir opciones, a, carga1, opc, bus, nuevaCantidad, orden, lista, dim, ult como entero
-	Definir elementos_cant_id Como Caracter
+	Definir elementos_cant_id, nombreUsuario Como Caracter
+	
 	a = 1
 	dim = 10000
 	ult = 4
+	
 	Dimension elementos_cant_id[dim,3]
 	
-	elementos_cant_id[0,0] = "zapatillas nike mujer"
+	//ELEMENTOS DEL ARREGLO PRECARGADOS COMO PRUEBA
+	elementos_cant_id[0,0] = "Zapatillas Nike mujer"
 	elementos_cant_id[0,1] = "20"
 	elementos_cant_id[0,2] = "1"
 	
-	elementos_cant_id[1,0] = "buzo adidas"
+	elementos_cant_id[1,0] = "Buzo Adidas"
 	elementos_cant_id[1,1] = "4"
 	elementos_cant_id[1,2] = "2"
 	
-	elementos_cant_id[2,0] = "pantalon puma"
+	elementos_cant_id[2,0] = "Pantalon Puma"
 	elementos_cant_id[2,1] = "33"
 	elementos_cant_id[2,2] = "3"
 	
-	elementos_cant_id[3,0] = "Gorra Nike"
+	elementos_cant_id[3,0] = "Gorra Adidas"
 	elementos_cant_id[3,1] = "50"
 	elementos_cant_id[3,2] = "4"
 	
-	Mientras a=1 Hacer
+	Mostrar "Bienvendio. Ingrese su nombre..."
+	Leer nombreUsuario
+	
+	Mientras opciones <> 5 Hacer
 		
-		Mostrar "Ingrese una opcion:"
+		Mostrar nombreUsuario ". Ingrese una opcion:"
 		Mostrar "1. Carga de datos"
+		//BUSCA UN PRODUCTO POR SU ID Y LO MUESTRA
 		Mostrar "2. Busqueda por id de producto"
+		//ORDENA PRODUCTOS POR CANTIDAD DE STOCK DISPONIBLE
 		Mostrar "3. Ordenar productos por cantidad"
+		//MUESTRA LISTA CON TODOS LOS PRODUCTOS DISPONIBLES ACTUALMENTE
 		Mostrar "4. Mostrar todos los productos"
 		Mostrar "5. Salir"
 		
@@ -38,6 +46,7 @@ Proceso fgdfg
 		Segun opciones Hacer
 			1:
 				Repetir
+					//CARGA DE NUEVO PRODUCTO O MODIFICACION DE UNO YA EXISTENTE
 					Mostrar "Ingrese una opción:"
 					Mostrar "1. Elemento nuevo"
 					Mostrar "2. Elemento existente"
@@ -54,14 +63,14 @@ Proceso fgdfg
 							Mostrar "Opcion incorrecta"
 					Fin Segun
 				Mientras Que opc <> 3
-				//Si usuario ingresa el id existente se va a permitir agregar cantidad , si no esta creado con un parametro que cicle por el array se va a crear un objeto nuevo
 			2:
 				bus = busqueda(elementos_cant_id, dim)
 			3:
 				orden = ordenamiento(elementos_cant_id, dim, ult)
-				//Con una lista de ordenamiento i, j ,k ordene de mayor a menor por cantidades
 			4:
 				lista = mostrarLista(elementos_cant_id)
+			5:
+				Mostrar "Hasta luego..."
 				
 			De Otro Modo:
 				Mostrar "Opcion incorrecta"
@@ -71,16 +80,17 @@ Proceso fgdfg
 	
 FinProceso
 //Opcion 1.1
-Funcion carga <- cargaNueva(array, ult Por Referencia )
+Funcion carga <- cargaNueva(array, ult Por Referencia)
 	
 	Definir i, j, cantidad, id, cont, contaux Como Entero
 	Definir nombre Como Caracter
 	Definir a, b Como Logico
 	a = Falso
 	b = Falso
-	cont = 0
-	contaux = 0
+	cont = 0 //PARA UBICAR ULTIMA POSICION CON UN PRODUCTO
+	contaux = 0 //PARA VALIDAR ID Y NOMBRE EXISTENTE
 	
+	//CARGANDO NUEVO PRODUCTO. PRIMERO SE INGRESA, DESPUES SE VALIDA ANTES DE CARGAR
 	Mostrar "1: Nombre del producto"
 	Leer nombre
 	Mostrar "2: Cantidad de producto"
@@ -89,7 +99,7 @@ Funcion carga <- cargaNueva(array, ult Por Referencia )
 	Leer id
 	Repetir
 		Si "" == array[cont,2] Entonces
-			//Validar ID
+			//VALIDAR ID
 			Repetir
 				Si id == ConvertirANumero(array[contaux,2]) Entonces
 					Mostrar "ID existente. Ingrese otro"
@@ -107,7 +117,7 @@ Funcion carga <- cargaNueva(array, ult Por Referencia )
 			contaux = 0
 			b = Falso
 			
-			//Validar Nombre
+			//VALIDAR NOMBRE
 			Repetir
 				Si nombre == array[contaux,0] Entonces
 					Mostrar "Nombre existente. Ingrese otro"
@@ -122,10 +132,21 @@ Funcion carga <- cargaNueva(array, ult Por Referencia )
 				Fin Si
 			Hasta Que b = Verdadero
 			
+			//VALIDAR QUE CANTIDAD SEA MAYOR A 0
+			Mientras cantidad < 0 Hacer
+				Mostrar "Cantidad incorrecta. Ingrese un numero mayor a 0"
+				Leer cantidad
+			Fin Mientras
+			
+			//SI TODO ES CORRECTO, SE CARGA NUEVO PRODUCTO
 			array[cont,0] = nombre
 			array[cont,1] = ConvertirATexto(cantidad)
 			array[cont,2] = ConvertirATexto(id)
+			
+			//SE VALIDA PARA PODER SALIR
 			a = Verdadero
+			
+			//SE SUMA UNA POSICION PARA SABER CUAL ES EL ULTIMO LUGAR CON UN PRODUCTO CARGADO Y UTILIZARLO EN OTRAS FUNCIONES
 			ult = ult + 1
 		FinSi
 		cont = cont+1
@@ -149,13 +170,21 @@ Funcion carga <- cargaExistente(array, a)
 			Mostrar "ID encontrado. El producto es ", array[i,0] " - Cantidad: " array[i,1] " - ID: " array[i,2]
 			Mostrar "Actualice la cantidad del producto"
 			Leer cant
+			//VALIDANDO QUE CANTIDAD SEA MAYOR A 0
+			Mientras cant < 0 Hacer
+				Mostrar "Cantidad incorrecta. Ingrese un numero mayor a 0"
+				Leer cant
+			Fin Mientras
+			//COPIANDO NUEVO VALOR DE CANTIDAD
 			array[i,1] = ConvertirATexto(cant)
 			Mostrar "Actualizado con exito. El nuevo producto quedó modificado de la siguiente manera: " array[i,0] " - CANTIDAD: " array[i,1] " - ID: " array[i,2]
+			//VALIDANDO LA BUSQUEDA COMO EXITOSA
 			encontrado = Verdadero
 		Fin Si
 		
 	Fin Para
 	
+	//CUANDO EL ID BUSCADO NO SE ENCUENTRA
 	Si encontrado == Falso Entonces
 		Mostrar "Disculpe, el ID no se encuentra aún registrado"
 	Fin Si
@@ -176,10 +205,12 @@ Funcion bus <- busqueda(array, a)
 	Para i<-0 Hasta a-1 Con Paso 1 Hacer
 		Si busqueda1 == ConvertirANumero(array[i,2]) Entonces
 			Mostrar "Busqueda exitosa: ", array[i,0], " - ", "Cantidad: ", array[i,1], " - ",  "ID: ", array[i,2]
+			//VALIDANDO LA BUSQUEDA COMO EXITOSA
 			encontrado = Verdadero
 		Fin Si
 	Fin Para
 	
+	//CUANDO EL ID BUSCADO NO SE ENCUENTRA
 	Si encontrado == Falso Entonces
 		Mostrar "Disculpe, el ID no se encuentra aún registrado"
 	Fin Si
@@ -188,7 +219,7 @@ FinFuncion
 
 
 //Opcion 3
-Funcion ord <- ordenamiento(array, a, ult)
+Funcion ord <- ordenamiento(array, a, ult Por Referencia)
 	
 	Definir posMayor, i, j, k, cont Como entero
 	Definir aux Como Caracter
@@ -205,6 +236,7 @@ Funcion ord <- ordenamiento(array, a, ult)
 			Fin Si
 		Fin Para
 		
+		//UBICANDO LO VALORES NUEVOS Y LOS VIEJOS EN ORDEN DESCENDENTE
 		Para k<-0 Hasta 2 Con Paso 1 Hacer
 			aux = array[i,k]
 			array[i,k] = array[posMayor,k]
@@ -213,6 +245,7 @@ Funcion ord <- ordenamiento(array, a, ult)
 		
 	Fin Para
 	
+	//MOSTRANDO NUEVO ARREGLO ORDENADO DE MANERA DESCENDENTE
 	Repetir
 		Si "" == array[cont,0] Entonces
 			bandera = Falso
@@ -221,13 +254,6 @@ Funcion ord <- ordenamiento(array, a, ult)
 			cont = cont + 1
 		Fin Si
 	Hasta Que bandera = Falso
-	
-	//Para i<-0 Hasta a-1 Con Paso 1 Hacer
-	//Para j<-0 Hasta 2 Con Paso 1 Hacer
-	//Mostrar Sin Saltar array[i,j]
-	//Mostrar " "
-	//Fin Para
-	//Fin Para
 	
 FinFuncion
 
@@ -241,7 +267,9 @@ Funcion  lista <- mostrarLista(elementos_cant_id)
 	cont = 0
 	
 	Repetir
+		//MOSTRANDO SOLO LOS LUGARES DEL ARREGLO QUE CONTIENEN ALGUN DATO
 		Si "" == elementos_cant_id[cont,0] Entonces
+			//MODIFICANDO BANDERA PARA PODER SALIR
 			bandera = Falso
 		SiNo
 			Mostrar "Nombre: ", elementos_cant_id[cont,0], " - ", "Cantidad: ", elementos_cant_id[cont,1], " ",  "Id: ", elementos_cant_id[cont,2]
